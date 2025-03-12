@@ -28,7 +28,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         </div>
                     </div>
                 `;
-
+                
                 // Lägg till kortet i produktcontainern
                 productContainer.appendChild(productCard);
             });
