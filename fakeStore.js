@@ -1,12 +1,12 @@
+const MAX_NAME_LENGTH = 50;
+const MIN_NAME_LENGTH = 2;
+
 
 let cart = JSON.parse(localStorage.getItem('cart')) || [];
 updateCartCount();
 
 document.addEventListener('DOMContentLoaded', function() {
-    // URL to Fake Store API
     const apiUrl = 'https://fakestoreapi.com/products';
-
-    // Fetch all products from API
     fetch(apiUrl)
         .then(response => response.json())
         .then(products => {
@@ -16,20 +16,18 @@ document.addEventListener('DOMContentLoaded', function() {
                 console.log('Product container not found on this page');
                 return;
             }
-
-            // Loop through all products and create HTML for each product
             products.forEach(product => {
                 const productCard = document.createElement('div');
                 productCard.classList.add('col-md-3', 'col-sm-6', 'col-12');
 
                 productCard.innerHTML = `
-                    <div class="card product-card" style="background-color:#d3bcb0">
-                        <img src="${product.image}" class="h-100 product-img" alt="${product.title}">
+                    <div class="card product-card border-0 shadow mt-10" style="background: linear-gradient(to bottom,rgb(247, 211, 183));">
+                        <img src="${product.image}" class="h-50 product-img" alt="${product.title}">
                         <div class="card-body" style="color: #FFFF; font-style: italic; font-family: 'Times New Roman', Times, serif; ">
                             <h5 class="card-title">${product.title}</h5>
-                            <p class="card-text">${product.description.substring(0, 100)}...</p>
+                            <p class="card-text">${product.description.substring(0, 50)}...</p>
                             <p class="card-text"><strong>$${product.price}</strong></p>
-                            <button class="btn btn-outline-light add-to-cart" style="background-color: #d3bcb0" 
+                            <button class="btn btn-outline-light add-to-cart" style="background: linear-gradient(to bottom,rgb(247, 211, 183));" 
                                     data-id="${product.id}" 
                                     data-title="${product.title}" 
                                     data-price="${product.price}" 
