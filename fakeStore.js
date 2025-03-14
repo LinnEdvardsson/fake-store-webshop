@@ -21,12 +21,13 @@ document.addEventListener('DOMContentLoaded', function() {
                 productCard.classList.add('col-md-3', 'col-sm-6', 'col-12');
 
                 productCard.innerHTML = `
-                    <div class="card product-card border-0 shadow mt-10" style="background: linear-gradient(to bottom,rgb(247, 211, 183));">
-                        <img src="${product.image}" class="h-50 product-img" alt="${product.title}">
-                        <div class="card-body" style="color: #FFFF; font-style: italic; font-family: 'Times New Roman', Times, serif; ">
-                            <h5 class="card-title">${product.title}</h5>
-                            <p class="card-text">${product.description.substring(0, 50)}...</p>
-                            <p class="card-text"><strong>$${product.price}</strong></p>
+                    <div class="card product-card border-0 shadow mt-10" style="background: linear-gradient(to bottom,rgb(247, 211, 183));" height: 700px; display: flex; flex-direction: column;">
+                     <div style="height: 750px; width: 300px; overflow: hidden;">
+                        <img src="${product.image}" class="w-100 h-50 rounded product-img" alt="${product.title}" style="object-fit: cover;">
+                        <div class="card-body d-flex flex-column"" style="color: #FFFF; font-style: italic; font-family: 'Times New Roman', Times, serif; ">
+                            <h5 class="card-title" style="height: 50px; overflow: hidden;">${product.title}</h5>
+                            <p class="card-text" style="height: 80px; overflow: hidden;">${product.description.substring(0, 100)}...</p>
+                            <p class="card-text"><strong>Price: $${product.price}</strong></p>
                             <button class="btn btn-outline-light add-to-cart" style="background: linear-gradient(to bottom,rgb(247, 211, 183));" 
                                     data-id="${product.id}" 
                                     data-title="${product.title}" 
@@ -37,12 +38,10 @@ document.addEventListener('DOMContentLoaded', function() {
                         </div>
                     </div>
                 `;
-                
-                // Add the card to the product container
+            
                 productContainer.appendChild(productCard);
             });
 
-            // Add event listeners to all "Add to Cart" buttons
             document.querySelectorAll('.add-to-cart').forEach(button => {
                 button.addEventListener('click', addToCart);
             });
@@ -51,7 +50,6 @@ document.addEventListener('DOMContentLoaded', function() {
             console.error('Failed to fetch products:', error);
         });
 
-    // Check if we're on the cart page and display cart items if we are
     const cartContainer = document.getElementById('cart-container');
     if (cartContainer) {
         displayCartItems();
