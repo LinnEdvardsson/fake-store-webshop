@@ -62,6 +62,7 @@ function loadShop() {
 
  // Function to add items to cart
 function addToCart(event) {
+    console.log('Add to Cart button clicked');
     const button = event.target;
     const id = button.dataset.id;
     const title = button.dataset.title;
@@ -84,8 +85,6 @@ function addToCart(event) {
     
 
     localStorage.setItem('cart', JSON.stringify(cart));
-    
-
     updateCartCount();
     
     button.textContent = 'Added!';
@@ -101,6 +100,11 @@ function updateCartCount() {
         cartCountElement.textContent = totalItems;
     }
 }
+document.addEventListener('DOMContentLoaded', function() {
+    // Ensure the page has fully loaded before calling orderSum()
+    displayCartItems();
+});
+
 
 function displayCartItems() {
     const cartContainer = document.getElementById('cart-container');
@@ -235,30 +239,17 @@ function checkout() {
     orderSum();
 }
 
-function orderSum(){
-    const summeryContainer = document.getElementById('summeryContainer');
-    displayCartItems(summeryContainer);
-}
-
-// controll input at form in placeorder.
 document.addEventListener('DOMContentLoaded', function() {
-    // Call the orderSum function to display cart items when the page is loaded
+    // Ensure the page has fully loaded before calling orderSum()
     orderSum();
 });
 
 function orderSum() {
     const summeryContainer = document.getElementById('summeryContainer');
-    displayCartItems(summeryContainer);
-}
-
-
-document.addEventListener('DOMContentLoaded', function() {
-    // Call the orderSum function to display cart items when the page is loaded
-    orderSum();
-});
-
-function orderSum() {
-    const summeryContainer = document.getElementById('summeryContainer');
+    if (!summeryContainer) {
+        console.error('summeryContainer element not found!');
+        return;
+    }
     displayItems(summeryContainer);
 }
 
