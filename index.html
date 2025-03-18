@@ -55,7 +55,6 @@
                 <div class="navbar-nav">
                   <a class="nav-link active" aria-current="page" href="home.html">Home</a>
                   <a class="nav-link" href="shop.html">Shop</a>
-                  <a class="nav-link" href="cart.html">Shoppingcart</a>
                   <a class="nav-link" href="cart.html">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cart" viewBox="0 0 16 16">
                       <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l1.313 7h8.17l1.313-7H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
@@ -69,8 +68,8 @@
         </div>
       </nav>
       <hr>
-      <div class="container py-4">
-        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4">
+      <div class="container align-items-center min-vh-50">
+  <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4">
           <!-- Card 1 -->
           <div class="col">
             <div class="card h-100 bg-custom border-0 shadow">
@@ -105,6 +104,9 @@
           </div>
 </div>
 </div>
+<div class="d-flex justify-content-center my-4">
+  <button class="btn btn-outline-light" id="shopButton" style="background: linear-gradient(to bottom,rgb(247, 211, 183))">Visit Store</button>
+</div>
 <hr>
 <div class="container my-5">
     <footer class="text-center text-lg-start" style="background: linear-gradient(to bottom, #f5ceb1);">
@@ -138,6 +140,11 @@
     
   </div>
 
-<script src="fakeStore.js"></script>
+  <script>
+    document.getElementById('shopButton').addEventListener('click', function() {
+    window.location.href = 'shop.html';
+});
+  </script>
+<script src="app.js"></script>
 </body>
 </html>

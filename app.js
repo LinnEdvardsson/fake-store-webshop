@@ -1,73 +1,66 @@
-const MAX_NAME_LENGTH = 50;
-const MIN_NAME_LENGTH = 2;
 
 
 let cart = JSON.parse(localStorage.getItem('cart')) || [];
 updateCartCount();
 
-document.addEventListener('DOMContentLoaded', function() {
-    const apiUrl = 'https://fakestoreapi.com/products';
-    fetch(apiUrl)
-        .then(response => response.json())
-        .then(products => {
-            const productContainer = document.getElementById('product-container');
-            
-            if (!productContainer) {
-                console.log('Product container not found on this page');
-                return;
+document.addEventListener('DOMContentLoaded', function(){
+    loadShop();
+
+});
+
+function loadShop() {
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', 'https://fakestoreapi.com/products', true);
+
+    xhr.onload = function() {
+        if(this.status == 200) {
+            var shopLoad = JSON.parse(this.responseText);
+
+            var output = '';
+            for(var i in shopLoad) {
+                var product = shopLoad[i];
+               // Creating the product card
+               output += `
+               <div class="col-md-3 col-sm-6 col-12">
+                <div class="card product-card border-0 shadow mt-10" style="background: linear-gradient(to bottom,rgb(247, 211, 183));" height: 100%; display: flex; flex-direction: column;">
+                     <div style="h-50; overflow: hidden;">
+                           <img src="${product.image}" class="w-100 h-50 rounded product-img" alt="${product.title}" style="object-fit: cover;">
+                           <div class="card-body d-flex flex-column" style="color: #FFFF; font-style: italic; font-family: 'Times New Roman', Times, serif;">
+                               <h5 class="card-title" style="height: 50px; overflow: hidden;">${product.title}</h5>
+                               <p class="card-text" style="height: 80px; overflow: hidden;">${product.description.substring(0, 100)}...</p>
+                               <p class="card-text"><strong>Price: $${product.price}</strong></p>
+                               <button class="btn btn-outline-light add-to-cart" style="background: linear-gradient(to bottom,rgb(247, 211, 183));"
+                                       data-id="${product.id}" 
+                                       data-title="${product.title}"
+                                       data-price="${product.price}" 
+                                       data-image="${product.image}">
+                                   Add to Cart
+                               </button>
+                           </div>
+                       </div>
+                   </div>
+               </div>
+               `;
             }
-            products.forEach(product => {
-                const productCard = document.createElement('div');
-                productCard.classList.add('col-md-3', 'col-sm-6', 'col-12');
 
-                productCard.innerHTML = `
-                    <div class="card product-card border-0 shadow mt-10" style="background: linear-gradient(to bottom,rgb(247, 211, 183));" height: 700px; display: flex; flex-direction: column;">
-                     <div style="height: 750px; width: 300px; overflow: hidden;">
-                        <img src="${product.image}" class="w-100 h-50 rounded product-img" alt="${product.title}" style="object-fit: cover;">
-                        <div class="card-body d-flex flex-column"" style="color: #FFFF; font-style: italic; font-family: 'Times New Roman', Times, serif; ">
-                            <h5 class="card-title" style="height: 50px; overflow: hidden;">${product.title}</h5>
-                            <p class="card-text" style="height: 80px; overflow: hidden;">${product.description.substring(0, 100)}...</p>
-                            <p class="card-text"><strong>Price: $${product.price}</strong></p>
-                            <button class="btn btn-outline-light add-to-cart" style="background: linear-gradient(to bottom,rgb(247, 211, 183));" 
-                                    data-id="${product.id}" 
-                                    data-title="${product.title}" 
-                                    data-price="${product.price}" 
-                                    data-image="${product.image}">
-                                Add to Cart
-                            </button>
-                        </div>
-                    </div>
-                `;
-            
-                productContainer.appendChild(productCard);
-            });
+            // Insert the product cards into the container
+            document.getElementById("product-container").innerHTML = output;
 
+            // Add event listeners to the "Add to Cart" buttons
             document.querySelectorAll('.add-to-cart').forEach(button => {
                 button.addEventListener('click', addToCart);
             });
-        })
-        .catch(error => {
-            console.error('Failed to fetch products:', error);
-        });
+        }
+    };
 
-    const cartContainer = document.getElementById('cart-container');
-    if (cartContainer) {
-        displayCartItems();
-    }
+    xhr.onerror = function() {
+        console.error('Request failed');
+    };
 
-    // Add event listener for search input
-    const searchInput = document.getElementById('searchInput');
-    if (searchInput) {
-        searchInput.addEventListener('keydown', function(event) {
-            if (event.key === 'Enter') {
-                event.preventDefault();
-                alert("Search function is out of order");
-            }
-        });
-    }
-});
+    xhr.send();
+}
 
-// Function to add items to cart
+ // Function to add items to cart
 function addToCart(event) {
     const button = event.target;
     const id = button.dataset.id;
@@ -75,14 +68,11 @@ function addToCart(event) {
     const price = parseFloat(button.dataset.price);
     const image = button.dataset.image;
     
-    // Check if the product is already in the cart
     const existingItemIndex = cart.findIndex(item => item.id === id);
     
     if (existingItemIndex > -1) {
-        // Increment quantity if item exists
         cart[existingItemIndex].quantity += 1;
     } else {
-        // Add new item if it doesn't exist
         cart.push({
             id,
             title,
@@ -92,20 +82,18 @@ function addToCart(event) {
         });
     }
     
-    // Save cart to localStorage
+
     localStorage.setItem('cart', JSON.stringify(cart));
     
-    // Update cart count in the UI
+
     updateCartCount();
     
-    // Visual feedback
     button.textContent = 'Added!';
     setTimeout(() => {
         button.textContent = 'Add to Cart';
     }, 1000);
 }
 
-// Function to update the cart count badge
 function updateCartCount() {
     const cartCountElement = document.getElementById('cart-count');
     if (cartCountElement) {
@@ -114,12 +102,11 @@ function updateCartCount() {
     }
 }
 
-// Function to display cart items on the cart page
 function displayCartItems() {
     const cartContainer = document.getElementById('cart-container');
     
     if (cart.length === 0) {
-        cartContainer.innerHTML = '<div class="alert alert-info">Your cart is empty</div>';
+        cartContainer.innerHTML = '<div class="alert alert-info-lg">Your cart is empty</div>';
         return;
     }
     
@@ -195,7 +182,7 @@ function displayCartItems() {
     document.getElementById('checkout-button').addEventListener('click', checkout);
 }
 
-// Function to increase item quantity
+
 function increaseQuantity(event) {
     const id = event.target.dataset.id;
     const item = cart.find(item => item.id === id);
@@ -208,7 +195,6 @@ function increaseQuantity(event) {
     }
 }
 
-// Function to decrease item quantity
 function decreaseQuantity(event) {
     const id = event.target.dataset.id;
     const itemIndex = cart.findIndex(item => item.id === id);
@@ -226,7 +212,6 @@ function decreaseQuantity(event) {
     }
 }
 
-// Function to remove item from cart
 function removeFromCart(event) {
     const id = event.target.dataset.id;
     cart = cart.filter(item => item.id !== id);
@@ -236,7 +221,7 @@ function removeFromCart(event) {
     displayCartItems();
 }
 
-// Function to clear the entire cart
+
 function clearCart() {
     cart = [];
     localStorage.setItem('cart', JSON.stringify(cart));
@@ -244,10 +229,80 @@ function clearCart() {
     displayCartItems();
 }
 
-// Function to proceed to checkout
+
 function checkout() {
-    // Redirect to checkout page or show checkout modal
     window.location.href = 'placeOrder.html';
+    orderSum();
+}
+
+function orderSum(){
+    const summeryContainer = document.getElementById('summeryContainer');
+    displayCartItems(summeryContainer);
 }
 
 // controll input at form in placeorder.
+document.addEventListener('DOMContentLoaded', function() {
+    // Call the orderSum function to display cart items when the page is loaded
+    orderSum();
+});
+
+function orderSum() {
+    const summeryContainer = document.getElementById('summeryContainer');
+    displayCartItems(summeryContainer);
+}
+
+
+document.addEventListener('DOMContentLoaded', function() {
+    // Call the orderSum function to display cart items when the page is loaded
+    orderSum();
+});
+
+function orderSum() {
+    const summeryContainer = document.getElementById('summeryContainer');
+    displayItems(summeryContainer);
+}
+
+function displayItems(container) {
+    if (!container) {
+        container = document.getElementById('summeryContainer'); // Default to 'summeryContainer' if no container is passed
+    }
+    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+    if (cart.length === 0) {
+        container.innerHTML = '<div class="alert alert-info-lg">Your cart is empty</div>';
+        return;
+    }
+
+    let totalPrice = 0;
+    let cartHTML = '<div class="card p-3">'; // Add a card for the order summary
+
+    cart.forEach(item => {
+        const itemTotal = item.price * item.quantity;
+        totalPrice += itemTotal;
+
+        cartHTML += `
+            <div class="row mb-3">
+                <div class="col-md-2">
+                    <img src="${item.image}" class="img-fluid" style="max-height: 100px; object-fit: contain;">
+                </div>
+                <div class="col-md-6">
+                    <h5>${item.title}</h5>
+                    <p>Price: $${item.price.toFixed(2)} | Quantity: ${item.quantity}</p>
+                    <p>Total: $${itemTotal.toFixed(2)}</p>
+                </div>
+            </div>
+        `;
+    });
+
+    cartHTML += `
+        <div class="row mt-3">
+            <div class="col-12">
+                <h5>Total Price: $${totalPrice.toFixed(2)}</h5>
+            </div>
+        </div>
+    `;
+
+    cartHTML += '</div>'; // End card
+
+    container.innerHTML = cartHTML;
+}
