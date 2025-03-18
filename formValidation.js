@@ -47,7 +47,6 @@ document.addEventListener("DOMContentLoaded", function() {
         }
 
         // If all validations pass
-        alert("Order placed successfully!");
         window.location.href = 'orderPlaced.html'; // Redirect to order confirmation page
     });
 });
