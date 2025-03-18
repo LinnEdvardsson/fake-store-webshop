@@ -244,6 +244,7 @@ document.addEventListener('DOMContentLoaded', function() {
     orderSum();
 });
 
+/*
 function orderSum() {
     const summeryContainer = document.getElementById('summeryContainer');
     if (!summeryContainer) {
@@ -278,8 +279,7 @@ function displayItems(container) {
                 </div>
                 <div class="col-md-6">
                     <h5>${item.title}</h5>
-                    <p>Price: $${item.price.toFixed(2)} | Quantity: ${item.quantity}</p>
-                    <p>Total: $${itemTotal.toFixed(2)}</p>
+                    <p>Price: $${item.price} | Quantity: ${item.quantity}</p>
                 </div>
             </div>
         `;
@@ -296,4 +296,4 @@ function displayItems(container) {
     cartHTML += '</div>'; // End card
 
     container.innerHTML = cartHTML;
-}
+} */

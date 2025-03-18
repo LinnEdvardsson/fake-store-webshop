@@ -1,0 +1,19 @@
+
+body {
+    background: linear-gradient(to bottom, #ecd6ca, #eecdbc, #f5ceb1);
+    background-attachment: fixed;
+    min-height: 100vh;
+    }
+    .product-card {
+        border: 1px solid #fcfcfc;
+        border-radius: 8px;
+        margin: 10px 0;
+        transition: transform 0.3s ease;
+    }
+    .product-card:hover {
+        transform: scale(1.05);
+    }
+    .product-img {
+        object-fit: cover;
+        height: 200px;
+    }

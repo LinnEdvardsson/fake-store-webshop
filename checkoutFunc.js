@@ -6,7 +6,6 @@ function checkout() {
 }
 
 document.addEventListener('DOMContentLoaded', function() {
-    // Ensure the page has fully loaded before calling orderSum()
     orderSum();
 });
 
@@ -25,7 +24,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 function displayItems(container) {
     if (!container) {
-        container = document.getElementById('summeryContainer'); // Default to 'summeryContainer' if no container is passed
+        container = document.getElementById('summeryContainer'); 
     }
     let cart = JSON.parse(localStorage.getItem('cart')) || [];
 
@@ -35,7 +34,7 @@ function displayItems(container) {
     }
 
     let totalPrice = 0;
-    let cartHTML = '<div class="card p-3">'; // Add a card for the order summary
+    let cartHTML = '<div class="card p-3">'; 
 
     cart.forEach(item => {
         const itemTotal = item.price * item.quantity;
@@ -48,8 +47,7 @@ function displayItems(container) {
                 </div>
                 <div class="col-md-6">
                     <h5>${item.title}</h5>
-                    <p>Price: $${item.price.toFixed(2)} | Quantity: ${item.quantity}</p>
-                    <p>Total: $${itemTotal.toFixed(2)}</p>
+                    <p>Price: $${item.price} | Quantity: ${item.quantity}</p>
                 </div>
             </div>
         `;
@@ -58,12 +56,12 @@ function displayItems(container) {
     cartHTML += `
         <div class="row mt-3">
             <div class="col-12">
-                <h5>Total Price: $${totalPrice.toFixed(2)}</h5>
+                <h5>Total Price: $${totalPrice}</h5>
             </div>
         </div>
     `;
 
-    cartHTML += '</div>'; // End card
+    cartHTML += '</div>';
 
     container.innerHTML = cartHTML;
 }
