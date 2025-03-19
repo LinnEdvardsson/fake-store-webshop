@@ -141,7 +141,7 @@ function displayCartItems() {
                             </div>
                         </div>
                         <div class="col-md-2 d-flex align-items-center justify-content-center">
-                            <button class="btn btn-outline remove-from-cart" data-id="${item.id}">Remove</button>
+                            <button class="btn btn-outline remove-from-cart" data-id="${item.id}"class="btn btn-outline ms-2" style="background-color: #eecdbc; color: white;">Remove</button>
                         </div>
                     </div>
                 </div>
@@ -159,8 +159,8 @@ function displayCartItems() {
                         <h5 class="card-title">Cart Summary</h5>
                         <p class="card-text">Total Items: ${cart.reduce((total, item) => total + item.quantity, 0)}</p>
                         <p class="card-text">Total Price: $${totalPrice.toFixed(2)}</p>
-                        <button id="checkout-button" class="btn btn-success">Proceed to Checkout</button>
-                        <button id="clear-cart" class="btn btn-outline-secondary ms-2">Clear Cart</button>
+                        <button id="checkout-button" class="btn btn-outline ms-2" style="background-color: #eecdbc; color: white;">Proceed to Checkout</button>
+                        <button id="clear-cart" class="btn btn-outline ms-2" style="background-color: #eecdbc; color: white;">Clear Cart</button>
                     </div>
                 </div>
             </div>
@@ -169,7 +169,7 @@ function displayCartItems() {
     
     cartContainer.innerHTML = cartHTML;
     
-    // Add event listeners for cart actions
+    // Cart functions && cart-listeners
     document.querySelectorAll('.increase-quantity').forEach(button => {
         button.addEventListener('click', increaseQuantity);
     });
@@ -232,68 +232,3 @@ function clearCart() {
     updateCartCount();
     displayCartItems();
 }
-
-
- /*function checkout() {
-    window.location.href = 'placeOrder.html';
-    orderSum();
-}
-
-document.addEventListener('DOMContentLoaded', function() {
-    // Ensure the page has fully loaded before calling orderSum()
-    orderSum();
-});
-
-
-function orderSum() {
-    const summeryContainer = document.getElementById('summeryContainer');
-    if (!summeryContainer) {
-        console.error('summeryContainer element not found!');
-        return;
-    }
-    displayItems(summeryContainer);
-}
-
-function displayItems(container) {
-    if (!container) {
-        container = document.getElementById('summeryContainer'); // Default to 'summeryContainer' if no container is passed
-    }
-    let cart = JSON.parse(localStorage.getItem('cart')) || [];
-
-    if (cart.length === 0) {
-        container.innerHTML = '<div class="alert alert-info-lg">Your cart is empty</div>';
-        return;
-    }
-
-    let totalPrice = 0;
-    let cartHTML = '<div class="card p-3">'; // Add a card for the order summary
-
-    cart.forEach(item => {
-        const itemTotal = item.price * item.quantity;
-        totalPrice += itemTotal;
-
-        cartHTML += `
-            <div class="row mb-3">
-                <div class="col-md-2">
-                    <img src="${item.image}" class="img-fluid" style="max-height: 100px; object-fit: contain;">
-                </div>
-                <div class="col-md-6">
-                    <h5>${item.title}</h5>
-                    <p>Price: $${item.price} | Quantity: ${item.quantity}</p>
-                </div>
-            </div>
-        `;
-    });
-
-    cartHTML += `
-        <div class="row mt-3">
-            <div class="col-12">
-                <h5>Total Price: $${totalPrice.toFixed(2)}</h5>
-            </div>
-        </div>
-    `;
-
-    cartHTML += '</div>'; // End card
-
-    container.innerHTML = cartHTML;
-} */
