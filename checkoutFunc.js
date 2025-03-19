@@ -2,7 +2,6 @@
 
 function checkout() {
     window.location.href = 'placeOrder.html';
-    orderSum();
 }
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -56,7 +55,7 @@ function displayItems(container) {
     cartHTML += `
         <div class="row mt-3">
             <div class="col-12">
-                <h5>Total Price: $${totalPrice}</h5>
+                <h5>Total Price: $${totalPrice.toFixed(2)}</h5>
             </div>
         </div>
     `;

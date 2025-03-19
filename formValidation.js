@@ -1,4 +1,6 @@
+
 document.addEventListener("DOMContentLoaded", function() {
+    
     document.getElementById("placeOrderBtn").addEventListener("click", function(event) {
         const name = document.getElementById("nameCont").value.trim();
         const email = document.getElementById("emailCont").value.trim();

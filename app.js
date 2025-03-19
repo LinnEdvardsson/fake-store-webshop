@@ -101,7 +101,6 @@ function updateCartCount() {
     }
 }
 document.addEventListener('DOMContentLoaded', function() {
-    // Ensure the page has fully loaded before calling orderSum()
     displayCartItems();
 });
 
@@ -113,6 +112,7 @@ function displayCartItems() {
         cartContainer.innerHTML = '<div class="alert alert-info-lg">Your cart is empty</div>';
         return;
     }
+    
     
     let totalPrice = 0;
     let cartHTML = '<div class="row">';
@@ -234,7 +234,7 @@ function clearCart() {
 }
 
 
-function checkout() {
+ /*function checkout() {
     window.location.href = 'placeOrder.html';
     orderSum();
 }
@@ -244,7 +244,7 @@ document.addEventListener('DOMContentLoaded', function() {
     orderSum();
 });
 
-/*
+
 function orderSum() {
     const summeryContainer = document.getElementById('summeryContainer');
     if (!summeryContainer) {
